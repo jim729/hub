@@ -1,0 +1,262 @@
+/* Globale Stile und Variablen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    --color-hover: rgb(201, 202, 213);
+    --transition: all 0.2s ease;
+    --header-bg-color: #273336;
+    --header-hover-color: #c3c6ca;
+}
+
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+    --color-bg: #e2e2e2;
+}
+
+.dark-mode {
+    --color-white: #000;
+    --color-black: #fff;
+    --color-bg: #1d1b31;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar-Stile */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 78px;
+    background: var(--color-white);
+    padding: 8px 16px;
+    transition: width var(--transition); /* Änderung der Transition-Eigenschaft */
+    overflow: hidden;
+    height: 100%; /* Sidebar-Höhe konstant halten */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.expand {
+    width: 250px;
+}
+
+/* Zentrieren des Aufklapp-Icons in der Sidebar */
+.sidebar-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 30px; /* Die Höhe der Sidebar beibehalten */
+}
+
+/* Aufklapp-Button-Stil */
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--color-black);
+    font-size: 44px;
+    cursor: pointer;
+    margin-top: auto; /* Verschiebt das Icon nach unten */
+    position: absolute; /* Absolute Positionierung */
+    top: 8px; /* Position von oben */
+    left: 20px; /* Position von links */
+}
+
+
+/* Text im Aufklapp-Icon */
+.sidebar-toggle .link-text {
+    position: absolute;
+    left: 90px; /* Position des Textes, wenn die Sidebar ausgeklappt ist */
+    visibility: hidden; /* Text ausblenden */
+    transition: visibility 0.3s ease;
+}
+
+.sidebar.expand .sidebar-toggle .link-text {
+    left: 110px; /* Position des Textes, wenn die Sidebar ausgeklappt ist */
+    visibility: visible; /* Text einblenden */
+}
+
+/* Sidebar-Link-Stil */
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px; /* Abstand zum Aufklapp-Button */
+}
+
+.sidebar i, .sidebar .link-text {
+    text-align: center; /* Zentrieren des Textes und der Icons */
+}
+
+/* Sidebar-Link-Stil */
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px;
+    font-size: 30px;
+    transition: background-color var(--transition);
+    text-decoration: none;
+    color: var(--color-black); /* Standardtextfarbe */
+    border: 1px solid transparent; /* Transparente Umrandung */
+    width: 100%; /* Stellt sicher, dass der Link die gesamte Breite einnimmt */
+    box-sizing: border-box; /* Stellt sicher, dass Padding und Border innerhalb der definierten Breite bleiben */
+}
+
+/* Hover-Stil */
+.sidebar-link:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* Milchiger Hintergrundeffekt */
+    color: var(--color-black); /* Textfarbe beibehalten */
+    border: 1px solid var(--color-hover); /* Umrandung beim Hover */
+}
+
+/* Fettere Icons */
+.sidebar i {
+    font-weight: bold;
+    font-size: 36px; /* Erhöhen Sie die Icon-Größe */
+}
+
+/* Text in der Sidebar sichtbar machen */
+.sidebar .link-text {
+    display: none;
+    margin-left: 35px;
+    font-size: 24px;
+}
+
+.sidebar.expand .link-text {
+    display: inline;
+}
+
+.sidebar a {
+    color: var(--color-black);
+    text-decoration: none;
+    margin-top: 25px; /* Abstand zwischen den Items */
+}
+
+.sidebar .sidebar-link {
+    display: flex;
+    align-items: center;
+    transition: background-color var(--transition);
+}
+
+.sidebar .sidebar-link:hover {
+    background-color: var(--color-hover);
+    color: var(--color-white);
+}
+
+/* Stile für das Suchfeld */
+#myInput {
+    width: calc(100% - 40px); /* Adjust the width to fit within the sidebar when expanded */
+    font-size: 16px;
+    padding: 10px;
+    margin: 10px 20px;
+    display: block;
+    border: 2px solid var(--header-bg-color);
+    border-radius: 5px;
+}
+
+/* Stile für die Tabelle */
+table {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: var(--color-white);
+    border-radius: 5px;
+    overflow: hidden;
+    width: calc(100% - 40px);
+    margin: 20px 20px;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: var(--header-bg-color);
+    color: var(--color-white);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+.plus-button {
+    background-color: var(--header-bg-color);
+    color: var(--color-white);
+    text-decoration: none;
+    border-radius: 50%; /* Erzeugt einen runden Button */
+    font-size: 30px; /* Größe des Plus-Zeichens */
+    font-weight: bold; /* Dickeres Plus-Zeichen */
+    line-height: 60px; /* Stellt die Zeilenhöhe auf die Höhe des Buttons ein */
+    display: block; /* Ändert das Display zu Block */
+    text-align: center; /* Zentriert den Text horizontal */
+    width: 60px; /* Breite des Buttons */
+    height: 60px; /* Höhe des Buttons, gleich wie die Breite für einen perfekten Kreis */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 101;
+    padding: 0; /* Entfernt jegliches Padding */
+    overflow: hidden; /* Verhindert Überlauf des Inhalts */
+}
+
+.plus-button:hover {
+    background-color: var(--header-hover-color);
+}
+
+
+
+
+/* Anpassungen für den main-content, wenn die Sidebar eingeklappt ist */
+.main-content {
+    margin-left: 78px;
+    width: calc(100% - 78px);
+}
+
+/* Media Query für größere Bildschirme */
+@media (min-width: 768px) {
+    .sidebar.expand {
+        width: 250px;
+    }
+    .sidebar.expand .sidebar-link .link-text {
+        display: inline;
+    }
+    .sidebar.expand ~ .main-content {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
+}
+/* Kopfleiste Stile */
+.header {
+    background-color: var(--header-bg-color); /* Hintergrundfarbe */
+    padding: 10px 20px; /* Padding für Höhe und Breite */
+    display: flex;
+    justify-content: flex-end; /* Positioniert den Home-Button rechts */
+    align-items: center; /* Zentriert den Inhalt vertikal */
+    font-size: 16px; /* Schriftgröße */
+}
+
+.home-button {
+    text-decoration: none; /* Entfernt Unterstreichung */
+    color: #000000; /* Textfarbe, hier die Farbe Ihrer Kopfleiste */
+    font-weight: bold; /* Macht den Text fett */
+    font-size: 28px; /* Größere Schriftgröße */
+    padding: 5px 10px; /* Ein bisschen Padding, um den Klickbereich zu vergrößern */
+    transition: color var(--transition); /* Glatter Übergang für Farbwechsel */
+}
+
+.home-button:hover {
+    color: var(--color-hover); /* Ändert die Textfarbe beim Hover */
+}

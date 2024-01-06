@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Detail</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 3px 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .header-buttons {
+            display: flex;
+        }
+        .header-button {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            background-color: #007bff;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+        .header-button:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .tile {
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            width: calc(33% - 20px); /* Drittel der Breite minus Abstand */
+            text-align: center;
+        }
+        .tile h2 {
+            color: #007bff;
+            margin: 0 0 10px 0;
+        }
+        .tile p {
+            margin: 5px 0;
+        }
+        button, .back-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        button:hover, .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+<head>
+<div class="header">
+    <h1><a href="{% url 'items_page' %}" style="color: #fff; text-decoration: none;">Hub</a></h1>
+    <div class="header-buttons">
+        <a href="{% url 'items_page' %}" class="header-button"><i class="fas fa-list"></i>Items</a>
+        <a href="{% url 'items_category' %}" class="header-button"><i class="fas fa-folder"></i>Categories</a>
+    </div>
+</div>
+</head>
+<body>
+    <div class="container">
+        <div class="tile">
+            <h2>ID</h2>
+            <p>{{ item.id }}</p>
+        </div>
+        <div class="tile">
+            <h2>Name</h2>
+            <p>{{ item.name }}</p>
+        </div>
+        <div class="tile">
+            <h2>Description</h2>
+            <p>{{ item.description }}</p>
+        </div>
+        <div class="tile">
+            <h2>Category</h2>
+            <p>{{ item.category.name }}</p>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <form method="post" action="{% url 'item_detail' item.id %}">
+            {% csrf_token %}
+            <button type="submit" name="delete" onclick="return confirm('Sind Sie sicher, dass Sie dieses Element löschen möchten?')">Löschen</button>
+        </form>
+        <a href="{% url 'items_page' %}" class="back-button">Back</a>
+    </div>
+</body>
+
+
+

@@ -1,0 +1,35 @@
+/* Globale Stile - an Bootstrap angepasst */
+body {
+    font-family: $font-family-base; /* Bootstrap Variable für Schriftart */
+    background-color: $body-bg; /* Bootstrap Variable für Hintergrundfarbe */
+}
+
+/* Bootstrap Sidebar (ersetzt .sidebar Klasse) */
+.sidebar {
+    @include make-col-ready();
+    @include make-col(3);
+}
+
+/* Anpassung der Sidebar-Links */
+.sidebar .nav-link {
+    @extend .btn; /* Erweitern der Bootstrap-Button-Klasse */
+    @extend .btn-primary; /* Farbschema */
+    margin-bottom: $spacer; /* Verwendung der Bootstrap-Spacer-Variable */
+}
+
+/* Bootstrap-konforme Tabellen */
+table {
+    @extend .table; /* Bootstrap Tabelle */
+}
+
+/* Plus-Button an Bootstrap angepasst */
+.plus-button {
+    @extend .btn; /* Standard Bootstrap Button */
+    @extend .btn-primary; /* Primäre Button-Farbe */
+    border-radius: 50%; /* Runde Form */
+    width: 50px; /* Festgelegte Breite */
+    height: 50px; /* Festgelegte Höhe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

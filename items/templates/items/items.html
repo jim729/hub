@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Item List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Einbindung des Responsive Sidebar Styles -->
+    <link rel="stylesheet" href="{% static 'css/styles2.css' %}">
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'items_page' %}" class="home-button">HUB</a>
+    </header>
+
+    <!-- Responsive Sidebar Menu -->
+    <div class="sidebar">
+        <!-- Schaltfläche zum Ein- und Ausklappen der Sidebar -->
+        <div class="sidebar-toggle-container">
+            <button class="sidebar-toggle">☰</button>
+        </div>
+
+        <!-- Sidebar-Links -->
+        <div class="sidebar-links">
+            <a href="{% url 'items_page' %}" class="sidebar-link">
+                <i class="fas fa-list"></i>
+                <span class="link-text">Items</span>
+            </a>
+            <a href="{% url 'items_category' %}" class="sidebar-link">
+                <i class="fas fa-folder"></i>
+                <span class="link-text">Categories</span>
+            </a>
+            <!-- Weitere Links oder Inhalte für die Sidebar -->
+        </div>
+    </div>
+
+    <!-- Hauptinhalt -->
+    <div class="main-content">
+        <!-- Ihre bestehende Suchleiste -->
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Suche nach Namen..">
+
+        <!-- Ihre bestehende Tabelle -->
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Kategorie</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category.name }}</td>
+                        <td><a href="{% url 'item_detail' item.id %}" class="button">Detail</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Der + Button -->
+        <a href="{% url 'item_create' %}" class="plus-button">+</a>
+    </div>
+
+    <!-- JavaScript für die Suchfunktion und das Ein- und Ausklappen der Sidebar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('expand');
+                updateMainContentLayout();
+            });
+
+            function updateMainContentLayout() {
+                if (sidebar.classList.contains('expand')) {
+                    // Sidebar ist ausgeklappt
+                    mainContent.style.marginLeft = '250px';
+                    mainContent.style.width = 'calc(100% - 250px)';
+                } else {
+                    // Sidebar ist eingeklappt
+                    mainContent.style.marginLeft = '78px';
+                    mainContent.style.width = 'calc(100% - 78px)';
+                }
+            }
+
+            // Erste Anpassung beim Laden der Seite
+            updateMainContentLayout();
+        });
+
+
+    
+    </script>
+</body>
+</html>

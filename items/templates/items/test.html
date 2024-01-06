@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard mit Sidebar</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <style>
+        /* Globale CSS-Variablen */
+        :root {
+            --primary-color: #e0edfa; /* Hauptfarbe */
+            --sidebar-bg-color: #f7f7f7; /* Hintergrundfarbe der Sidebar */
+            --sidebar-text-color: #555; /* Textfarbe der Sidebar */
+            --sidebar-link-size: 200%; /* Schriftgröße der Sidebar-Links */
+            --navbar-bg-color: #283234; /* Hintergrundfarbe der Navbar */
+            --navbar-text-color: #ffffff; /* Textfarbe der Navbar */
+            --navbar-link-size: 1.2em; /* Schriftgröße der Navbar-Links */
+            --navbar-height: 60px; /* Neue Navbar-Höhe */
+            --link-hover-bg: #555; /* Hintergrundfarbe beim Hover */
+            --link-hover-color: #fff; /* Textfarbe beim Hover */
+            --link-hover-transition: background-color 0.3s, color 0.3s; /* Sanfter Übergang */
+            
+            /* Tabellenstil */
+            --table-header-bg: #283234; /* Hintergrundfarbe des Tabellen-Headers */
+            --table-even-bg: #ffffff; /* Hintergrundfarbe für gerade Zeilen */
+            --table-odd-bg: hsl(0, 0%, 58%); /* Hintergrundfarbe für ungerade Zeilen */
+            --add-button-bg: #bab2b2; /* Hintergrundfarbe des Plus-Buttons */
+            --add-button-text-color: #555; /* Textfarbe des Plus-Buttons */
+            
+            /* Farben für verschiedene Elemente */
+            --element-bg-color: #fff; /* Hintergrundfarbe für Elemente */
+            --element-border-color: #ddd; /* Randfarbe für Elemente */
+            --element-text-color: #ffffff; /* Textfarbe für Elemente */
+        }
+        .nav-link:hover,
+        #add-button:hover {
+            background-color: var(--link-hover-bg);
+            color: var(--link-hover-color);
+            transition: var(--link-hover-transition);
+        }
+        body {
+            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Globale Hover-Effekt-Einstellung */
+        a:hover {
+            color: var(--primary-color); /* Farbe ändern */
+            background-color: var(--hover-bg-color); /* Hintergrundfarbe ändern */
+            text-decoration: none; /* Unterstreichung entfernen */
+        }
+
+        /* Globale Farb- und Schriftgrößeneinstellungen für Sidebar */
+        #sidebar {
+            background-color: var(--sidebar-bg-color); /* Hintergrundfarbe der Sidebar ändern */
+        }
+
+
+        #sidebar ul li a:hover {
+            background-color: var(--hover-bg-color); /* Hintergrundfarbe der Sidebar-Links bei Hover ändern */
+            color: var(--hover-bg-color); /* Textfarbe der Sidebar-Links bei Hover ändern */
+            text-decoration: none; /* Unterstreichung entfernen */
+        }
+
+        /* Globale Farb- und Schriftgrößeneinstellungen für Navbar */
+        .navbar {
+            background-color: var(--navbar-bg-color); /* Hintergrundfarbe der Navbar ändern */
+        }
+
+        .navbar .navbar-brand {
+            color: var(--navbar-text-color); /* Textfarbe des Navbar-Brands ändern */
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: var(--navbar-text-color); /* Textfarbe der Navbar-Links ändern */
+            font-size: var(--navbar-link-size); /* Schriftgröße der Navbar-Links ändern */
+        }
+
+        .navbar .navbar-nav .nav-link:hover {
+            background-color: var(--hover-bg-color); /* Hintergrundfarbe der Navbar-Links bei Hover ändern */
+            color: var(--primary-color); /* Textfarbe der Navbar-Links bei Hover ändern */
+            text-decoration: none; /* Unterstreichung entfernen */
+        }
+        
+
+        /* Ihr restlicher CSS-Code bleibt unverändert */
+
+        #sidebar {
+            width: 80px; /* Small width */
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: width 0.3s;
+            z-index: 999;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #sidebar.active {
+            width: 250px; /* Full width */
+            align-items: flex-start;
+        }
+
+        #sidebar ul.components {
+            padding: 0;
+            list-style: none;
+            width: 100%;
+        }
+
+        #sidebar ul li a {
+            padding: 10px 20px;
+            color: var(--sidebar-text-color); /* Textfarbe der Sidebar-Links ändern */
+            font-size: var(--sidebar-link-size); /* Schriftgröße der Sidebar-Links ändern */
+            font-weight: bold; /* Fettformatierung hinzufügen */
+            display: flex;
+            align-items: center;
+            transition: color 0.5s;
+            margin-top: 20px; /* Abstand der Icons*/
+            
+        }
+
+        #sidebar ul li a i {
+        font-size: 32px; /* Größere Icons */
+        width: 30px; /* Fixed width für Icons */
+        text-align: right;
+        margin-top: 10px; /* Icon Verschiebung nach unten */
+        }
+
+        #sidebar ul li a span {
+            display: none;
+            flex-grow: 1;
+            white-space: nowrap;
+        }
+
+        #sidebar.active ul li a span {
+            display: inline;
+            padding-left: 10px; /* Zusätzlicher Raum zwischen Icon und Text */
+            margin-top: 10px; /* Text Verschiebung nach unten */
+        }
+
+        .navbar {
+            padding: 0 15px;
+            transition: margin-left 0.3s;
+            margin-left: 80px; /* Abstand für die minimierte Sidebar */
+            z-index: 998;
+            height: var(--navbar-height); /* Verwende die neue Navbar-Höhe */
+            justify-content: space-between; /* Stellt sicher, dass die Elemente am Anfang und Ende sind */
+        }
+
+        #content {
+            transition: margin-left 0.3s;
+            padding: 20px;
+            margin-left: 80px; /* Platz für die minimierte Sidebar */
+        }
+
+        #content.active, .navbar.active {
+            margin-left: 250px; /* Platz für die ausgeklappte Sidebar */
+        }
+
+        #sidebarCollapse {
+            position: fixed;
+            top: 0px;
+            left: calc(40px - 35px);
+            width: 60px;
+            height: 60px;
+            background: #f7f7f7;
+            color: #555;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #sidebarCollapse i {
+            font-size: 35px; /* Größere Icon-Größe */
+        }
+
+        /* Tabelle Stil */
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: var(--element-text-color);
+        }
+
+        .table th {
+            background-color: var(--table-header-bg);
+        }
+
+        .table tbody tr:nth-of-type(odd) {
+            background-color: var(--table-odd-bg);
+        }
+
+        .table tbody tr:nth-of-type(even) {
+            background-color: var(--table-even-bg);
+        }
+
+
+        @media (max-width: 768px) {
+            #content .navbar {
+        transition: margin-left 0.3s;
+        padding: 20px;
+        margin-left: 150px; /* Platz für die ausgeklappte Sidebar */
+        position: relative; /* Hinzugefügte Positionseigenschaft */
+        z-index: 1; /* Hinzugefügter Z-Index */
+    }
+    .navbar-collapse {
+        position: absolute;
+        flex-grow: 0;
+    }
+    .navbar-nav {
+        margin-right: 15px; /* Oder andere Anpassungen für kleinere Bildschirme */
+    }
+    .navbar-brand {
+        position: static;
+        transform: none;
+    }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Andere Navigationslinks, die kollabieren -->
+            </div>
+            <a class="nav-link" href="{% url 'items_page' %}" style="margin-right: 15px;">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <ul class="list-unstyled components">
+            <li>
+                <a href="{% url 'items_page' %}">
+                    <i class="fas fa-list"></i>
+                    <span>Items</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'items_category' %}">
+                    <i class="fas fa-folder"></i>
+                    <span>Categories</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Content -->
+    <div id="content">
+        <button id="sidebarCollapse" type="button">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <!-- Table and other content -->
+        <div class="table-container">
+            <input type="text" class="form-control mb-3" placeholder="Suche nach Namen...">
+            <table class="table">
+                <thead style="background-color: var(--table-header-bg);">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Kategorie</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.category.name }}</td>
+                        <td><a href="{% url 'item_detail' item.id %}"class="btn btn-primary">Detail</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button id="add-button" class="btn btn-primary rounded-circle" style="position: fixed; bottom: 20px; right: 20px;">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #content, .navbar').toggleClass('active');
+        });
+    });
+</script>
+</body>
+</html>
